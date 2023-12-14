@@ -22,7 +22,7 @@ export const LecturesList = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 34px;
+  gap: 20px;
 `;
 
 export const BackButton = styled.button`

@@ -1,11 +1,11 @@
 import React from "react";
 import * as S from "./Input.styled";
 
-export interface InputProps {
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
-  onChange: (value: string) => void;
 }
 
-export const Input = ({ value, onChange }: InputProps) => (
-  <S.Input value={value} onChange={(e) => onChange(e.target.value)} />
+export const Input = ({ value, ...rest }: InputProps) => (
+  <S.Input value={value} {...rest} />
 );

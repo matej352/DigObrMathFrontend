@@ -1,6 +1,9 @@
+"use client";
+
 import StyledComponentsRegistry from "./lib/registry";
 import "./main.css";
 import { Roboto } from "next/font/google";
+import { CookiesProvider } from "react-cookie";
 
 const roboto = Roboto({
   weight: "400",
@@ -16,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={roboto.className}>
       <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <CookiesProvider defaultSetOptions={{ path: "/" }}>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        </CookiesProvider>
       </body>
     </html>
   );

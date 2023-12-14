@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
 import { GradePicker } from "@/ui/components";
+import Header from "@/ui/components/Header/Header";
 
 export default function GradePickerPage() {
   return (
     <main>
-      <h1>Sretno Ante123</h1>
+      <Header />
       <GradePicker />
     </main>
   );
