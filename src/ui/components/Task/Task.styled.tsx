@@ -99,6 +99,9 @@ export const BoxTitle = styled.span`
 `;
 
 export const Answer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
   height: 400px;
   border-radius: 10px;
   background: #fff;
@@ -156,4 +159,48 @@ export const ClickableText = styled.span<{ color?: string }>`
   font-style: normal;
   font-weight: 600;
   cursor: pointer;
+`;
+
+export const TextAnswer = styled.textarea`
+  background: #f4f4f4;
+  border-radius: 10px;
+  font-size: 16px;
+  border: none;
+  resize: none;
+  padding: 10px;
+`;
+
+export const SendButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+  flex-direction: column;
+`;
+
+export const SendButton = styled.button<{ isDisabled: boolean }>`
+  border-radius: 8px;
+  background: #ffba00;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  border: none;
+  width: 100px;
+  padding: 5px 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+
+  ${({ isDisabled }) =>
+    isDisabled &&
+    `
+    background: #e0e0e0;
+    cursor: not-allowed;
+  `}
+`;
+
+export const AnswerResult = styled.span<{ color?: string }>`
+  color: ${({ color }) => color || "#4E7B79"};
+
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
 `;

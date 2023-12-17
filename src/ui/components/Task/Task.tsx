@@ -4,6 +4,7 @@ import { DifficultyPicker, LoadingSpinner } from "..";
 import type { Difficulty, Lecture, Task, Help } from "@/ui/types";
 import axios from "axios";
 import { useUser } from "@/ui/hooks";
+import { useRouter } from "next/navigation";
 
 type TaskProps = {
   grade: number;
@@ -33,6 +34,10 @@ export function Task({ grade, lectureId }: TaskProps) {
   const [showHelpButton, setShowHelpButton] = useState(true);
   const [help, setHelp] = useState({} as Help);
   const [taskCounter, setTaskCounter] = useState(0);
+  const { back } = useRouter();
+  const [answer, setAnswer] = useState("");
+  const [isSaveDisabled, setIsSaveDisabled] = useState(false);
+  const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     const fetchLectures = async () => {
@@ -62,6 +67,11 @@ export function Task({ grade, lectureId }: TaskProps) {
   useEffect(() => {
     const fetchNewTask = async () => {
       setIsLoading(true);
+      setShowHelp(false);
+      setShowHelpButton(true);
+      setAnswer("");
+      setIsCorrect(undefined);
+
       try {
         const { data } = await axios.get(
           `${BACKEND_URL}/api/new-task?taskId=${lectureId}${getHardnessParam(
@@ -107,8 +117,36 @@ export function Task({ grade, lectureId }: TaskProps) {
 
   const skipTask = () => {
     setTaskCounter(taskCounter + 1);
-    setShowHelp(false);
-    setShowHelpButton(true);
+  };
+
+  const sendAnswer = async () => {
+    if (!answer || isSaveDisabled) {
+      return;
+    }
+    setIsSaveDisabled(true);
+    try {
+      const { data } = await axios.post(
+        `${BACKEND_URL}/api/task-correctness`,
+        {
+          task: task.task,
+          answer,
+          taskType: lectureId,
+          logId: help.logId,
+        },
+        {
+          headers: {
+            accessToken: `${user?.accessToken}`,
+          },
+        }
+      );
+
+      console.log(data);
+      setIsCorrect(data.correctness);
+      setIsSaveDisabled(false);
+    } catch (error) {
+      setIsSaveDisabled(false);
+      console.log(error);
+    }
   };
 
   return isLoading ? (
@@ -143,6 +181,23 @@ export function Task({ grade, lectureId }: TaskProps) {
         <S.InputContainer>
           <S.Answer>
             <S.BoxTitle>Odgovor</S.BoxTitle>
+            <S.TextAnswer
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              rows={8}
+            />
+            {isCorrect !== undefined && (
+              <S.AnswerResult>
+                {isCorrect ? "Točan odgovor :)" : "Pogrešan odgovor :("}
+              </S.AnswerResult>
+            )}
+            <S.SendButtonWrapper>
+              {
+                <S.SendButton onClick={sendAnswer} isDisabled={isSaveDisabled}>
+                  Pošalji
+                </S.SendButton>
+              }
+            </S.SendButtonWrapper>
           </S.Answer>
         </S.InputContainer>
         <S.DifficultyContainer>
@@ -160,7 +215,7 @@ export function Task({ grade, lectureId }: TaskProps) {
           </S.HelpContainer>
         )}
       </S.MainGrid>
-      <S.BackButton>Nazad</S.BackButton>
+      <S.BackButton onClick={() => back()}>Nazad</S.BackButton>
     </S.Container>
   );
 }

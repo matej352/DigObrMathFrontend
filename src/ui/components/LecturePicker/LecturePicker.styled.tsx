@@ -7,6 +7,8 @@ export const Container = styled.div`
   border-radius: 20px;
   background: rgba(224, 224, 224, 0.64);
   gap: 34px;
+  max-width: 1500px;
+  margin: 0 auto;
 
   @media (min-width: 768px) {
     padding: 34px 92px;
