@@ -9,4 +9,6 @@ export { LectureCard } from "./LectureCard/LectureCard";
 export { Task } from "./Task/Task";
 export { LoginOrRegister } from "./LoginOrRegister/LoginOrRegister";
 export { LoadingSpinner } from "./LoadingSpinner/LoadingSpinner";
+export { ProgressBar } from "./ProgressBar/ProgressBar";
+export { DifficultyPicker } from "./DifficultyPicker/DifficultyPicker";
 export * from "./Icons";

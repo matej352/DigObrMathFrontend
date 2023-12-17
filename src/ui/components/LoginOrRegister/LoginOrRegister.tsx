@@ -27,9 +27,7 @@ export function LoginOrRegister() {
       password: "",
       repeatPassword: "",
     },
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: () => {},
     validationSchema: isLogin ? loginSchema : registerSchema,
     validateOnChange: true,
     validateOnMount: true,

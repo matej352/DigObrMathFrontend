@@ -1,18 +1,20 @@
 "use client";
 import React from "react";
 import { Task } from "@/ui/components";
+import Header from "@/ui/components/Header/Header";
 
 type TaskPageProps = {
   params: {
     grade: number;
-    task: number;
+    lectureId: string;
   };
 };
 
 export default function TaskPickerPage({ params }: TaskPageProps) {
   return (
     <main>
-      <Task grade={params.grade} task={params.task} />
+      <Header />
+      <Task grade={params.grade} lectureId={params.lectureId} />
     </main>
   );
 }

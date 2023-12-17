@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  padding: 0 20px;
+  padding: 0 92px;
   height: 89px;
   flex-shrink: 0;
   border-radius: 20px;
@@ -10,6 +10,8 @@ export const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  max-width: 1500px;
+  margin: 0 auto;
   margin-bottom: 50px;
 `;
 
@@ -22,7 +24,7 @@ export const Username = styled.h1`
 `;
 
 export const LogoutButton = styled.button`
-  width: 206px;
+  width: 106px;
   height: 41px;
   flex-shrink: 0;
   border-radius: 17px;
@@ -33,4 +35,8 @@ export const LogoutButton = styled.button`
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    width: 200px;
+  }
 `;

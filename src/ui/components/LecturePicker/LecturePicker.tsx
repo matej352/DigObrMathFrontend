@@ -33,7 +33,6 @@ export const LecturePicker = ({ grade }: LecturePickerProps) => {
       );
       setLectures(data.taskTypes);
       setIsLoading(false);
-      console.log(data);
     };
     try {
       fetchLectures();
