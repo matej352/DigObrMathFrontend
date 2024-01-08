@@ -55,6 +55,7 @@ export function LoginOrRegister() {
     } catch (e) {
       setIsLoading(false);
       console.log(e);
+      alert("Pogrešno korisničko ime ili lozinka");
     }
   };
   const handleRegister = async () => {

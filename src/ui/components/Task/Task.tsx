@@ -5,6 +5,7 @@ import type { Difficulty, Lecture, Task, Help } from "@/ui/types";
 import axios from "axios";
 import { useUser } from "@/ui/hooks";
 import { useRouter } from "next/navigation";
+import { useStopwatch } from "@/ui/hooks/stopwatch";
 
 type TaskProps = {
   grade: number;
@@ -38,6 +39,13 @@ export function Task({ grade, lectureId }: TaskProps) {
   const [answer, setAnswer] = useState("");
   const [isSaveDisabled, setIsSaveDisabled] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
+  const { time, start } = useStopwatch();
+
+  useEffect(() => {
+    if (user) {
+      start();
+    }
+  }, [start, user]);
 
   useEffect(() => {
     const fetchLectures = async () => {
@@ -132,6 +140,7 @@ export function Task({ grade, lectureId }: TaskProps) {
           answer,
           taskType: lectureId,
           logId: help.logId,
+          timeSpent: time,
         },
         {
           headers: {

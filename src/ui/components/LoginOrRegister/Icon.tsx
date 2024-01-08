@@ -2,8 +2,8 @@ import React from "react";
 
 export const Icon = () => (
   <svg
-    width="228"
-    height="242"
+    width="180"
+    height="180"
     viewBox="0 0 228 242"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

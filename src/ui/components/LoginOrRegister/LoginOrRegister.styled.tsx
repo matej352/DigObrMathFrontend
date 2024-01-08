@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 1043px;
-  height: 800px;
+  height: 80%;
   flex-shrink: 0;
   border-radius: 20px;
   background: rgba(224, 224, 224, 0.64);
@@ -10,7 +10,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 10px;
   align-self: center;
 `;
 
@@ -23,8 +23,8 @@ export const Title = styled.h1`
 `;
 
 export const SVGWrapper = styled.div`
-  width: 259px;
-  height: 259px;
+  width: 200px;
+  height: 200px;
   flex-shrink: 0;
   border-radius: 259px;
   background: #fff;
@@ -42,15 +42,15 @@ export const Description = styled.p`
 `;
 
 export const Button = styled.button<{ isFilled: boolean }>`
-  width: 320px;
-  height: 63px;
+  width: 200px;
+  height: 43px;
   flex-shrink: 0;
   border-radius: 17px;
   border: 3px solid #4e7b79;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   background: ${({ isFilled }) => (isFilled ? "#4E7B79" : "transparent")};
   color: ${({ isFilled }) => (isFilled ? "#fff" : "#4E7B79")};
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 700;
   cursor: pointer;
 `;
