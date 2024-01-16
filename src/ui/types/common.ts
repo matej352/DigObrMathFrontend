@@ -1,4 +1,5 @@
 export type User = {
+  _id: string;
   username: string;
   accessToken: string;
 };
@@ -18,4 +19,4 @@ export type Help = {
   logId: string;
 };
 
-export type Difficulty = "easy" | "medium" | "hard";
+export type Difficulty = "Lako" | "Srednje" | "Teško";

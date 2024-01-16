@@ -16,9 +16,9 @@ const BACKEND_URL =
   process.env.BACKEND_URL || "https://dig-obr-backend-app.vercel.app";
 
 const getHardnessParam = (difficulty: Difficulty) => {
-  if (difficulty === "easy") {
+  if (difficulty === "Lako") {
     return "&easy=yes";
-  } else if (difficulty === "medium") {
+  } else if (difficulty === "Srednje") {
     return "";
   } else {
     return "&hard=yes";
@@ -26,7 +26,7 @@ const getHardnessParam = (difficulty: Difficulty) => {
 };
 
 export function Task({ grade, lectureId }: TaskProps) {
-  const [difficulty, setDifficulty] = useState("medium" as Difficulty);
+  const [difficulty, setDifficulty] = useState("Srednje" as Difficulty);
   const [isLoading, setIsLoading] = React.useState(true);
   const { user } = useUser();
   const [lectureName, setLectureName] = useState("");
@@ -34,11 +34,10 @@ export function Task({ grade, lectureId }: TaskProps) {
   const [showHelp, setShowHelp] = useState(false);
   const [showHelpButton, setShowHelpButton] = useState(true);
   const [help, setHelp] = useState({} as Help);
-  const [taskCounter, setTaskCounter] = useState(0);
   const { back } = useRouter();
   const [answer, setAnswer] = useState("");
   const [isSaveDisabled, setIsSaveDisabled] = useState(false);
-  const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
+  const [isCorrect, setIsCorrect] = useState<string | undefined>(undefined);
   const { time, start } = useStopwatch();
 
   useEffect(() => {
@@ -72,35 +71,38 @@ export function Task({ grade, lectureId }: TaskProps) {
     fetchLectures();
   }, [grade, lectureId, user?.accessToken]);
 
-  useEffect(() => {
-    const fetchNewTask = async () => {
-      setIsLoading(true);
-      setShowHelp(false);
-      setShowHelpButton(true);
-      setAnswer("");
-      setIsCorrect(undefined);
+  const fetchNewTask = async (newDifficulty: Difficulty) => {
+    setIsLoading(true);
+    setShowHelp(false);
+    setShowHelpButton(true);
+    setAnswer("");
+    setIsCorrect(undefined);
 
-      try {
-        const { data } = await axios.get(
-          `${BACKEND_URL}/api/new-task?taskId=${lectureId}${getHardnessParam(
-            difficulty
-          )}`,
-          {
-            headers: {
-              accessToken: `${user?.accessToken}`,
-            },
-          }
-        );
-        setIsLoading(false);
-        setTask(data);
-      } catch (error) {
-        setIsLoading(false);
-        console.log(error);
-      }
-    };
+    try {
+      const { data } = await axios.get(
+        `${BACKEND_URL}/api/new-task?taskId=${lectureId}${getHardnessParam(
+          newDifficulty
+        )}`,
+        {
+          headers: {
+            accessToken: `${user?.accessToken}`,
+          },
+        }
+      );
+      setIsLoading(false);
+      setTask(data);
+    } catch (error) {
+      setIsLoading(false);
+      setDifficulty(task.hardness as Difficulty);
+      console.log(error);
+      alert("AI zagušen, pokušajte ponovno za nekoliko sekundi.");
+    }
+  };
 
-    fetchNewTask();
-  }, [difficulty, lectureId, user?.accessToken, taskCounter]);
+  const handleDifficultyChange = (newDifficulty: Difficulty) => {
+    setDifficulty(newDifficulty);
+    fetchNewTask(newDifficulty);
+  };
 
   const getHelp = async () => {
     setShowHelpButton(false);
@@ -123,8 +125,8 @@ export function Task({ grade, lectureId }: TaskProps) {
     }
   };
 
-  const skipTask = () => {
-    setTaskCounter(taskCounter + 1);
+  const skipTask = async () => {
+    await fetchNewTask("Srednje");
   };
 
   const sendAnswer = async () => {
@@ -155,8 +157,13 @@ export function Task({ grade, lectureId }: TaskProps) {
     } catch (error) {
       setIsSaveDisabled(false);
       console.log(error);
+      alert("AI zagušen, pokušajte ponovno za nekoliko sekundi.");
     }
   };
+
+  useEffect(() => {
+    fetchNewTask("Srednje");
+  }, []);
 
   return isLoading ? (
     <LoadingSpinner />
@@ -196,23 +203,34 @@ export function Task({ grade, lectureId }: TaskProps) {
               rows={8}
             />
             {isCorrect !== undefined && (
-              <S.AnswerResult>
-                {isCorrect ? "Točan odgovor :)" : "Pogrešan odgovor :("}
+              <S.AnswerResult
+                color={isCorrect === "true" ? "#4E7B79" : "#FF5978"}
+              >
+                {isCorrect === "true"
+                  ? "Točan odgovor :)"
+                  : "Pogrešan odgovor :("}
               </S.AnswerResult>
             )}
             <S.SendButtonWrapper>
-              {
+              {isCorrect !== "true" ? (
                 <S.SendButton onClick={sendAnswer} isDisabled={isSaveDisabled}>
                   Pošalji
                 </S.SendButton>
-              }
+              ) : (
+                <S.SendButton
+                  onClick={async () => await fetchNewTask(difficulty)}
+                  isDisabled={false}
+                >
+                  Sljedeći
+                </S.SendButton>
+              )}
             </S.SendButtonWrapper>
           </S.Answer>
         </S.InputContainer>
         <S.DifficultyContainer>
           <DifficultyPicker
-            difficulty={difficulty}
-            setDifficulty={setDifficulty}
+            difficulty={task.hardness as Difficulty}
+            setDifficulty={handleDifficultyChange}
           />
         </S.DifficultyContainer>
         {showHelp && (

@@ -15,6 +15,7 @@ export const useUser = () => {
 
   const logout = () => {
     removeCookie("user");
+    router.push("/login");
   };
 
   useEffect(() => {

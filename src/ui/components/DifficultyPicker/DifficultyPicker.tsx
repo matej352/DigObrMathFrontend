@@ -9,9 +9,9 @@ type DifficultyPickerProps = {
 };
 
 const difficultyToProgress = {
-  easy: 30,
-  medium: 60,
-  hard: 100,
+  Lako: 30,
+  Srednje: 60,
+  Teško: 100,
 };
 
 export function DifficultyPicker({
@@ -20,16 +20,16 @@ export function DifficultyPicker({
 }: DifficultyPickerProps) {
   const handleChange = (change: "easier" | "harder") => {
     if (change === "easier") {
-      if (difficulty === "medium") {
-        setDifficulty("easy");
-      } else if (difficulty === "hard") {
-        setDifficulty("medium");
+      if (difficulty === "Srednje") {
+        setDifficulty("Lako");
+      } else if (difficulty === "Teško") {
+        setDifficulty("Srednje");
       }
     } else if (change === "harder") {
-      if (difficulty === "medium") {
-        setDifficulty("hard");
-      } else if (difficulty === "easy") {
-        setDifficulty("medium");
+      if (difficulty === "Srednje") {
+        setDifficulty("Teško");
+      } else if (difficulty === "Lako") {
+        setDifficulty("Srednje");
       }
     }
   };
@@ -44,13 +44,13 @@ export function DifficultyPicker({
       <S.Footer>
         <S.Button
           onClick={() => handleChange("easier")}
-          disabled={difficulty === "easy"}
+          disabled={difficulty === "Lako"}
         >
           Lakše
         </S.Button>
         <S.Button
           onClick={() => handleChange("harder")}
-          disabled={difficulty === "hard"}
+          disabled={difficulty === "Teško"}
         >
           Teže
         </S.Button>

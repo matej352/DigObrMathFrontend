@@ -13,6 +13,10 @@ export const Container = styled.div`
   max-width: 1500px;
   margin: 0 auto;
   margin-bottom: 50px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
 export const Username = styled.h1`
@@ -24,7 +28,7 @@ export const Username = styled.h1`
 `;
 
 export const LogoutButton = styled.button`
-  width: 106px;
+  width: 120px;
   height: 41px;
   flex-shrink: 0;
   border-radius: 17px;
@@ -35,6 +39,31 @@ export const LogoutButton = styled.button`
   font-size: 20px;
   font-weight: 700;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 100px;
+    font-size: 14px;
+  }
+`;
+
+export const RightWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const DashboardLink = styled.a`
+  width: 106px;
+  height: 41px;
+  flex-shrink: 0;
+  color: #ca9300;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (min-width: 768px) {
     width: 200px;

@@ -11,4 +11,6 @@ export { LoginOrRegister } from "./LoginOrRegister/LoginOrRegister";
 export { LoadingSpinner } from "./LoadingSpinner/LoadingSpinner";
 export { ProgressBar } from "./ProgressBar/ProgressBar";
 export { DifficultyPicker } from "./DifficultyPicker/DifficultyPicker";
+export { AdminDashboard } from "./Dashboard/AdminDashboard";
+export { UserDashboard } from "./Dashboard/UserDashboard";
 export * from "./Icons";

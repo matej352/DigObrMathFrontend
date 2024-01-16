@@ -45,10 +45,13 @@ export function LoginOrRegister() {
       });
       setIsLoading(false);
 
+      console.log(loginResponse.data);
+
       const accessToken = loginResponse.data.accessToken;
       login({
         username: values.username,
         accessToken,
+        _id: loginResponse.data._id,
       });
 
       replace("/grade-picker");
@@ -76,6 +79,7 @@ export function LoginOrRegister() {
       login({
         username: values.username,
         accessToken,
+        _id: loginResponse.data._id,
       });
 
       replace("/grade-picker");

@@ -3,7 +3,7 @@ import * as S from "./GradePicker.styled";
 import { GradeCard } from "../GradeCard/GradeCard";
 import { useRouter } from "next/navigation";
 
-const grades = [
+export const grades = [
   {
     grade: 1,
     description:
@@ -16,33 +16,31 @@ const grades = [
   },
   {
     grade: 3,
-    description:
-      "Zbrajanje i oduzimanje brojeva do 1000. Množenje i dijeljenje brojeva do 100. Polovine, desetine, dvokratnici, trokratnici. Redoslijed množenja, dijeljenja, zbrajanja i oduzimanja.",
+    description: "Upotreba zagrada pri izvođenju više računskih operacija",
   },
   {
     grade: 4,
     description:
-      "Zbrajanje i oduzimanje brojeva do 1000. Množenje i dijeljenje brojeva do 100. Polovine, desetine, dvokratnici, trokratnici. Redoslijed množenja, dijeljenja, zbrajanja i oduzimanja.",
+      "Opseg pravokutnika i kvadrata. Opseg trokuta. Površina pravokutnika i kvadrata.",
   },
   {
     grade: 5,
     description:
-      "Zbrajanje i oduzimanje brojeva do 1000. Množenje i dijeljenje brojeva do 100. Polovine, desetine, dvokratnici, trokratnici. Redoslijed množenja, dijeljenja, zbrajanja i oduzimanja.",
+      "Zaokruživanje decimalnih brojeva. Dijeljivost prirodnih brojeva. Jednadžba pravca.",
   },
   {
     grade: 6,
     description:
-      "Zbrajanje i oduzimanje brojeva do 1000. Množenje i dijeljenje brojeva do 100. Polovine, desetine, dvokratnici, trokratnici. Redoslijed množenja, dijeljenja, zbrajanja i oduzimanja.",
+      "Koordinatni sustav u ravnini. Zbrajanje i oduzimanje racionalnih brojeva. Skraćivanje razlomaka. Recipročni brojevi.",
   },
   {
     grade: 7,
-    description:
-      "Zbrajanje i oduzimanje brojeva do 1000. Množenje i dijeljenje brojeva do 100. Polovine, desetine, dvokratnici, trokratnici. Redoslijed množenja, dijeljenja, zbrajanja i oduzimanja.",
+    description: "Linearna funkcija. Množenje razlomaka. Dijeljenje razlomaka.",
   },
   {
     grade: 8,
     description:
-      "Zbrajanje i oduzimanje brojeva do 1000. Množenje i dijeljenje brojeva do 100. Polovine, desetine, dvokratnici, trokratnici. Redoslijed množenja, dijeljenja, zbrajanja i oduzimanja.",
+      "Kvadriranje brojeva. Pitagorin poučak. Kvadratni korijen. Linearna jednadžba s jednom nepoznanicom. Primjena linearnih jednadžbi.",
   },
 ];
 

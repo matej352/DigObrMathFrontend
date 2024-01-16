@@ -175,6 +175,7 @@ export const SendButtonWrapper = styled.div`
   justify-content: flex-end;
   flex: 1;
   flex-direction: column;
+  gap: 10px;
 `;
 
 export const SendButton = styled.button<{ isDisabled: boolean }>`

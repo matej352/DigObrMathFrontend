@@ -15,13 +15,6 @@ const Container = styled.div`
 `;
 
 export default function Login() {
-  const { user } = useUser();
-  const { replace } = useRouter();
-
-  if (user) {
-    replace("/grade-picker");
-  }
-
   return (
     <Container>
       <LoginOrRegister />

@@ -7,8 +7,8 @@ export const DropdownContainer = styled.div`
 `;
 
 export const DropdownButton = styled.button`
-  background-color: #4caf50;
-  color: white;
+  background-color: #ffeeff;
+  color: black;
   padding: 16px;
   font-size: 16px;
   border: none;
@@ -18,6 +18,7 @@ export const DropdownButton = styled.button`
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+  border-radius: 6px;
 `;
 
 export const DropdownContent = styled.div`
@@ -64,5 +65,6 @@ export const ArrowIcon = styled(ArrowDown)<ArrowIconProps>(
   ({ $isOpen }) => css`
     transform: ${$isOpen ? "rotate(180deg)" : "rotate(0deg)"};
     transition: transform 0.25s ease-in-out;
+    margin-left: 8px;
   `
 );
