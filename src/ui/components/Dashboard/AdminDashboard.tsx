@@ -5,6 +5,7 @@ import { Dropdown, LoadingSpinner } from "..";
 import { useUser } from "@/ui/hooks";
 import axios from "axios";
 import { Lecture } from "@/ui/types";
+import dynamic from "next/dynamic";
 
 type TableEntry = {
   username: string;
@@ -14,7 +15,7 @@ type TableEntry = {
 const BACKEND_URL =
   process.env.BACKEND_URL || "https://dig-obr-backend-app.vercel.app";
 
-export function AdminDashboard() {
+function AdminDashboard() {
   const [grade, setGrade] = React.useState(grades[0].grade);
   const [lecture, setLecture] = React.useState<string | undefined>(undefined);
   const [lectures, setLectures] = React.useState<Lecture[]>();
@@ -101,7 +102,10 @@ export function AdminDashboard() {
               label: `${grade.toString()}. razred`,
               value: grade.toString(),
             }}
-            onChange={(grade) => setGrade(parseInt(grade.value))}
+            onChange={(grade) => {
+              setGrade(parseInt(grade.value));
+              setLecture(undefined);
+            }}
           />
           {isLoading ? (
             <LoadingSpinner />
@@ -151,3 +155,7 @@ export function AdminDashboard() {
     </S.Container>
   );
 }
+
+export default dynamic(() => Promise.resolve(AdminDashboard), {
+  ssr: false,
+});

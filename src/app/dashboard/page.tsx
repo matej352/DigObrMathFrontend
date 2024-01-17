@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import Header from "@/ui/components/Header/Header";
-import { AdminDashboard, UserDashboard } from "@/ui/components";
+import AdminDashboard from "@/ui/components/Dashboard/AdminDashboard";
+import UserDashboard from "@/ui/components/Dashboard/UserDashboard";
 import { useUser } from "@/ui/hooks";
 
 export default function LecturePickerPage() {
@@ -10,7 +11,7 @@ export default function LecturePickerPage() {
   return (
     <main>
       <Header />
-      {user?.name === "admin" ? <AdminDashboard /> : <UserDashboard />}
+      {user?.username === "admin" ? <AdminDashboard /> : <UserDashboard />}
     </main>
   );
 }

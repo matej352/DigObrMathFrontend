@@ -12,7 +12,7 @@ function Header() {
     logout();
   };
 
-  if (user?.name === "admin") {
+  if (user?.username === "admin") {
     return (
       <S.Container>
         <S.Username>Pozdrav {user?.username}</S.Username>

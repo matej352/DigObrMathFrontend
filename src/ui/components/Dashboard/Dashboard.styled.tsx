@@ -54,6 +54,7 @@ export const Table = styled.table`
   th,
   td {
     padding: 10px 20px;
+    text-align: center;
   }
 
   th {

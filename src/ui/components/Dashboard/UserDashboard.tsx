@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import * as S from "./Dashboard.styled";
 import { grades } from "../GradePicker/GradePicker";
 import { Dropdown, LoadingSpinner } from "..";
 import { useUser } from "@/ui/hooks";
 import axios from "axios";
 import { Lecture } from "@/ui/types";
+import dynamic from "next/dynamic";
 
 const BACKEND_URL =
   process.env.BACKEND_URL || "https://dig-obr-backend-app.vercel.app";
 
-export function UserDashboard() {
+function UserDashboard() {
   const [grade, setGrade] = React.useState(grades[0].grade);
   const [lecture, setLecture] = React.useState<string | undefined>(undefined);
   const [lectures, setLectures] = React.useState<Lecture[]>();
@@ -31,16 +32,7 @@ export function UserDashboard() {
       setLectures(data.taskTypes);
       setIsLoading(false);
     };
-    try {
-      fetchLectures();
-    } catch (e) {
-      setIsLoading(false);
-      console.log(e);
-    }
-  }, [grade, user?.accessToken]);
 
-  console.log(user);
-  useEffect(() => {
     const fetchLeaderboard = async () => {
       const { data } = await axios.post(
         `${BACKEND_URL}/api/dashboard`,
@@ -53,18 +45,23 @@ export function UserDashboard() {
           },
         }
       );
-      console.log(data);
 
       setUserResults(data.userResults);
     };
+
     try {
-      if (lecture) {
-        fetchLeaderboard();
-      }
+      fetchLectures();
+      fetchLeaderboard();
     } catch (e) {
+      setIsLoading(false);
       console.log(e);
     }
-  }, [user?.accessToken, user?.username, grade, lecture]);
+  }, [grade, user?._id, user?.accessToken]);
+
+  const lectureResults = useMemo(() => {
+    if (!userResults) return [];
+    return userResults.filter((res: any[]) => res[1]?.taskName === lecture);
+  }, [userResults, lecture]);
 
   return (
     <S.Container>
@@ -82,7 +79,10 @@ export function UserDashboard() {
               label: `${grade.toString()}. razred`,
               value: grade.toString(),
             }}
-            onChange={(grade) => setGrade(parseInt(grade.value))}
+            onChange={(grade) => {
+              setGrade(parseInt(grade.value));
+              setLecture(undefined);
+            }}
           />
           {isLoading ? (
             <LoadingSpinner />
@@ -105,7 +105,32 @@ export function UserDashboard() {
           )}
         </S.DropdownWrapper>
       </S.HeadingWrapper>
-      <p>{JSON.stringify(userResults)}</p>
+      <S.Table>
+        <tbody>
+          <tr>
+            <th>Zadatak</th>
+            <th>Vrijeme</th>
+            <th>Korištena pomoć</th>
+            <th>Točno</th>
+            <th>Bodovi</th>
+          </tr>
+          {lectureResults.map((res: any, index) => {
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{res[1].timeSpent}</td>
+                <td>{res[1].hintUsed ? "Da" : "Ne"}</td>
+                <td>{res[1].correctAnsw ? "Da" : "Ne"}</td>
+                <td>{res[1].totalScore}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </S.Table>
     </S.Container>
   );
 }
+
+export default dynamic(() => Promise.resolve(UserDashboard), {
+  ssr: false,
+});

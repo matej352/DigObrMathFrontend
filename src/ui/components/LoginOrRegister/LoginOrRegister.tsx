@@ -54,7 +54,13 @@ export function LoginOrRegister() {
         _id: loginResponse.data._id,
       });
 
+      if (values.username === "admin") {
+        replace("/dashboard");
+        return;
+      }
+
       replace("/grade-picker");
+      return;
     } catch (e) {
       setIsLoading(false);
       console.log(e);
