@@ -25,6 +25,14 @@ const getHardnessParam = (difficulty: Difficulty) => {
   }
 };
 
+const getCorrectness = (correctness: boolean | string) => {
+  if (typeof correctness === "boolean") {
+    return correctness;
+  }
+
+  return correctness === "true";
+};
+
 export function Task({ grade, lectureId }: TaskProps) {
   const [difficulty, setDifficulty] = useState("Srednje" as Difficulty);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -37,7 +45,7 @@ export function Task({ grade, lectureId }: TaskProps) {
   const { back } = useRouter();
   const [answer, setAnswer] = useState("");
   const [isSaveDisabled, setIsSaveDisabled] = useState(false);
-  const [isCorrect, setIsCorrect] = useState<string | undefined>(undefined);
+  const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
   const { time, start, reset } = useStopwatch();
 
   useEffect(() => {
@@ -153,7 +161,7 @@ export function Task({ grade, lectureId }: TaskProps) {
       );
 
       console.log(data);
-      setIsCorrect(data.correctness);
+      setIsCorrect(getCorrectness(data.correctness));
       setIsSaveDisabled(false);
     } catch (error) {
       setIsSaveDisabled(false);
@@ -210,15 +218,15 @@ export function Task({ grade, lectureId }: TaskProps) {
             )}
             <S.SendButtonWrapper>
               {isCorrect ? (
-                <S.SendButton onClick={sendAnswer} isDisabled={isSaveDisabled}>
-                  Pošalji
-                </S.SendButton>
-              ) : (
                 <S.SendButton
                   onClick={async () => await fetchNewTask(difficulty)}
                   isDisabled={false}
                 >
                   Sljedeći
+                </S.SendButton>
+              ) : (
+                <S.SendButton onClick={sendAnswer} isDisabled={isSaveDisabled}>
+                  Pošalji
                 </S.SendButton>
               )}
             </S.SendButtonWrapper>
