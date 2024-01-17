@@ -38,7 +38,7 @@ export function Task({ grade, lectureId }: TaskProps) {
   const [answer, setAnswer] = useState("");
   const [isSaveDisabled, setIsSaveDisabled] = useState(false);
   const [isCorrect, setIsCorrect] = useState<string | undefined>(undefined);
-  const { time, start } = useStopwatch();
+  const { time, start, reset } = useStopwatch();
 
   useEffect(() => {
     if (user) {
@@ -77,6 +77,7 @@ export function Task({ grade, lectureId }: TaskProps) {
     setShowHelpButton(true);
     setAnswer("");
     setIsCorrect(undefined);
+    reset();
 
     try {
       const { data } = await axios.get(
@@ -203,16 +204,12 @@ export function Task({ grade, lectureId }: TaskProps) {
               rows={8}
             />
             {isCorrect !== undefined && (
-              <S.AnswerResult
-                color={isCorrect === "true" ? "#4E7B79" : "#FF5978"}
-              >
-                {isCorrect === "true"
-                  ? "Točan odgovor :)"
-                  : "Pogrešan odgovor :("}
+              <S.AnswerResult color={isCorrect ? "#4E7B79" : "#FF5978"}>
+                {isCorrect ? "Točan odgovor :)" : "Pogrešan odgovor :("}
               </S.AnswerResult>
             )}
             <S.SendButtonWrapper>
-              {isCorrect !== "true" ? (
+              {isCorrect ? (
                 <S.SendButton onClick={sendAnswer} isDisabled={isSaveDisabled}>
                   Pošalji
                 </S.SendButton>
